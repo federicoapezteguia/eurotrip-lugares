@@ -35,11 +35,17 @@
         .roadmap-item { display: flex; gap: 20px; padding: 12px 24px; border-bottom: 1px solid rgba(255,255,255,0.02); }
         .roadmap-item:last-child { border-bottom: none; }
         
+        .place-rank { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: var(--muted); width: 24px; text-align: right; padding-top: 2px; }
+        .roadmap-item:nth-child(2) .place-rank { color: #facc15; } /* Color oro al #1 */
         .place-info { flex: 1; }
         .place-name { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 600; color: #fff; line-height: 1.2; margin-bottom: 4px;}
         .place-tagline { font-size: 13px; color: #cbd5e1; font-family: 'Inter'; line-height: 1.4;}
-        .expert-tip { font-size: 12px; color: #94a3b8; font-style: italic; margin-top: 4px; display: block;}
-        .expert-tip strong { color: #f8fafc; font-style: normal; font-family: 'JetBrains Mono'; font-size: 11px;}
+
+        .place-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;}
+        .tag { font-family: 'JetBrains Mono'; font-size: 8px; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 600;}
+        .tag-massive { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2);}
+        .tag-hidden { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2);}
+        .tag-app { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); text-transform: none; font-size: 9px;}
 
         /* LISTAS DE COMIDA */
         .food-list { margin: 8px 24px; padding-left: 20px; font-size: 13px; color: #cbd5e1; line-height: 1.6; }
@@ -52,13 +58,6 @@
         .direct-list li { font-size: 13px; color: #cbd5e1; margin-bottom: 8px; line-height: 1.4; padding-left: 15px; position: relative;}
         .direct-list li::before { content: "➔"; position: absolute; left: 0; color: inherit; font-size: 11px; }
         .direct-list strong { color: #fff; font-family: 'JetBrains Mono'; font-size: 12px; text-transform: uppercase; }
-
-        .place-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;}
-        .tag { font-family: 'JetBrains Mono'; font-size: 8px; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 600;}
-        .tag-massive { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2);}
-        .tag-hidden { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2);}
-        .tag-food { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2);}
-        .tag-app { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); text-transform: none; font-size: 9px;}
 
         #map { height: 500px; width: 100%; background: #000; border-radius: 16px; }
         .sidebar-sticky { position: sticky; top: 24px; }
@@ -74,37 +73,67 @@
     <div class="main-content">
         <header>
             <h1>Atlas<span>2026</span></h1>
-            <div class="subtitle">Secciones Optimizadas & Órdenes Logísticas</div>
+            <div class="subtitle">Atracciones Clasificadas & Listas de Alimentos</div>
         </header>
         
         <!-- SECCIÓN 1: ATRACCIONES Y GASTRONOMÍA -->
         <div class="card">
-            <div class="card-header">Sección I: Inmersión Urbana e Imperdibles Gastronómicos</div>
+            <div class="card-header">Sección I: Jerarquía de Atracciones (Mejor a Peor) e Imperdibles Económicos</div>
             
             <!-- PORTUGAL (SOLO OPORTO) -->
             <div class="city-section">
                 <div class="city-label" style="color:var(--c-por)"><div class="dot" style="background:var(--c-por)"></div>Oporto</div>
                 
-                <div class="section-sub">Atracciones e Imperdibles</div>
-                <div class="roadmap-item">
-                    <div class="place-info">
-                        <div class="place-name">Librería Lello &amp; Torre de los Clérigos</div>
-                        <div class="place-tagline">Icono neogótico. Escaleras con vistas completas de la ciudad vieja. Entrada con reserva previa online obligatoria.</div>
-                        <div class="place-meta"><span class="tag tag-massive">Ultra Masivo</span></div>
-                    </div>
-                </div>
-                <div class="roadmap-item">
+                <div class="section-sub">Ranking de Atracciones (8 de mejor a peor)</div>
+                <div class="roadmap-item"><div class="place-rank">1</div>
                     <div class="place-info">
                         <div class="place-name">Barrio de Ribeira &amp; Puente Dom Luís I</div>
-                        <div class="place-tagline">Paseo medieval costero. Cruza a pie por la plataforma superior al atardecer para ver las bodegas iluminadas.</div>
+                        <div class="place-tagline">La postal definitiva de Oporto. Cruza a pie por la plataforma superior para las mejores vistas y recorre el muelle medieval del río Duero.</div>
                         <div class="place-meta"><span class="tag tag-massive">Masivo</span></div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">2</div>
                     <div class="place-info">
-                        <div class="place-name">Mirador de las Virtudes &amp; Jardines del Palacio de Cristal</div>
-                        <div class="place-tagline">Anfiteatros verdes donde los locales ven la puesta de sol de cara al río Duero. Pavos reales libres.</div>
+                        <div class="place-name">Librería Lello &amp; Torre de los Clérigos</div>
+                        <div class="place-tagline">Joyas neogóticas arquitectónicas en el centro histórico. Es indispensable reservar el ticket online con días de antelación.</div>
+                        <div class="place-meta"><span class="tag tag-massive">Ultra Masivo</span></div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">3</div>
+                    <div class="place-info">
+                        <div class="place-name">Mirador de las Virtudes</div>
+                        <div class="place-tagline">El mejor anfiteatro natural oculto de la ciudad. Lugar de encuentro local indiscutible para ver la puesta de sol sobre el Duero.</div>
                         <div class="place-meta"><span class="tag tag-hidden">Joya Oculta</span></div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">4</div>
+                    <div class="place-info">
+                        <div class="place-name">Estación de São Bento</div>
+                        <div class="place-tagline">Vestíbulo monumental cubierto por más de 20.000 azulejos históricos azules y blancos. Entrada libre y gratuita en pleno centro.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">5</div>
+                    <div class="place-info">
+                        <div class="place-name">Jardines del Palacio de Cristal</div>
+                        <div class="place-tagline">Parque romántico elevado con senderos, fuentes y pavos reales libres. Excelentes vistas panorámicas al río sin aglomeraciones.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">6</div>
+                    <div class="place-info">
+                        <div class="place-name">Capilla de las Almas (Rua de Santa Catarina)</div>
+                        <div class="place-tagline">Iglesia pequeña cuya fachada exterior está completamente forrada de azulejos tradicionales. Impactante para fotos rápidas.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">7</div>
+                    <div class="place-info">
+                        <div class="place-name">Sé de Oporto (Catedral) y su Claustro</div>
+                        <div class="place-tagline">Iglesia fortaleza en la zona más alta de la ciudad. La plaza ofrece buenas vistas, pero el interior es algo sombrío y similar a otras catedrales.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">8</div>
+                    <div class="place-info">
+                        <div class="place-name">Foz do Douro (Desembocadura)</div>
+                        <div class="place-tagline">Zona costera donde el río choca con el Océano Atlántico. Es un paseo agradable si sobra tiempo, pero queda alejado del centro histórico.</div>
                     </div>
                 </div>
 
@@ -121,23 +150,53 @@
             <div class="city-section">
                 <div class="city-label" style="color:var(--c-fra)"><div class="dot" style="background:var(--c-fra)"></div>Frankfurt</div>
                 
-                <div class="section-sub">Atracciones e Imperdibles</div>
-                <div class="roadmap-item">
+                <div class="section-sub">Ranking de Atracciones (8 de mejor a peor)</div>
+                <div class="roadmap-item"><div class="place-rank">1</div>
                     <div class="place-info">
-                        <div class="place-name">Römerberg &amp; Catedral de San Bartolomé</div>
-                        <div class="place-tagline">Plaza histórica central reconstruida con entramados de madera tradicionales y catedral gótica imperial de piedra roja.</div>
+                        <div class="place-name">Römerberg (Plaza Central)</div>
+                        <div class="place-tagline">El corazón histórico. Hermosas casas medievales alemanas con entramado de madera minuciosamente reconstruidas tras los bombardeos.</div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">2</div>
                     <div class="place-info">
                         <div class="place-name">Plataforma de la Main Tower</div>
-                        <div class="place-tagline">Terraza abierta a 200 metros sobre los rascacielos financieros. Control de seguridad estricto en el ingreso.</div>
+                        <div class="place-tagline">Impresionante mirador abierto a 200 metros de altura en pleno centro financiero. La mejor panorámica del "Mainhattan" europeo.</div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">3</div>
                     <div class="place-info">
-                        <div class="place-name">Barrio Histórico de Sachsenhausen (Alt-Sachs)</div>
-                        <div class="place-tagline">Callejones de piedra antiguos que sobrevivieron a la guerra. Zona de tabernas tradicionales de sidra de manzana.</div>
+                        <div class="place-name">Alt-Sachsenhausen (Barrio Tradicional)</div>
+                        <div class="place-tagline">Calles adoquinadas históricas al sur del río. Concentración máxima de tabernas antiguas especializadas en sidra de manzana local.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">4</div>
+                    <div class="place-info">
+                        <div class="place-name">Eiserner Steg (Puente de Hierro)</div>
+                        <div class="place-tagline">Puente peatonal que cruza el río Meno. Ofrece una vista limpia y simétrica de los rascacielos combinados con las iglesias antiguas.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">5</div>
+                    <div class="place-info">
+                        <div class="place-name">Catedral de San Bartolomé</div>
+                        <div class="place-tagline">Templo gótico de piedra roja imperial donde se coronaba a los emperadores germanos. Entrada gratuita a la nave principal.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">6</div>
+                    <div class="place-info">
+                        <div class="place-name">Kleinmarkthalle (Mercado Local)</div>
+                        <div class="place-tagline">Mercado de alimentos techado e histórico. Excelente para captar la vida cotidiana y comer salchichas auténticas al paso.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">7</div>
+                    <div class="place-info">
+                        <div class="place-name">Casa-Museo de Goethe</div>
+                        <div class="place-tagline">Lugar de nacimiento del escritor más célebre de Alemania. Interesante a nivel cultural, aunque el mobiliario es en gran parte reconstruido.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">8</div>
+                    <div class="place-info">
+                        <div class="place-name">Distrito Financiero (Eurotower y Bankenviertel)</div>
+                        <div class="place-tagline">Caminar entre torres corporativas de cristal y sacarse una foto con el antiguo símbolo gigante del Euro. Solo rascacielos de oficinas.</div>
                     </div>
                 </div>
 
@@ -153,23 +212,55 @@
             <div class="city-section">
                 <div class="city-label" style="color:var(--c-pra)"><div class="dot" style="background:var(--c-pra)"></div>Praga</div>
                 
-                <div class="section-sub">Atracciones e Imperdibles</div>
-                <div class="roadmap-item">
+                <div class="section-sub">Ranking de Atracciones (8 de mejor a peor)</div>
+                <div class="roadmap-item"><div class="place-rank">1</div>
                     <div class="place-info">
-                        <div class="place-name">Puente Carlos &amp; Plaza de la Ciudad Vieja</div>
-                        <div class="place-tagline">Puente gótico del siglo XIV flanqueado por estatuas y plaza central que alberga el Reloj Astronómico medieval.</div>
+                        <div class="place-name">Plaza de la Ciudad Vieja &amp; Reloj Astronómico</div>
+                        <div class="place-tagline">El centro neurálgico medieval de Europa Central. El espectáculo del reloj cada hora es imperdible y la plaza es arquitectónicamente espectacular.</div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">2</div>
                     <div class="place-info">
-                        <div class="place-name">Castillo de Praga &amp; Callejón del Oro</div>
-                        <div class="place-tagline">Complejo fortificado medieval con la Catedral de San Vito y las casitas de antiguos alquimistas y guardianes.</div>
+                        <div class="place-name">Puente Carlos (Karlův Most)</div>
+                        <div class="place-tagline">Monumento icónico de piedra del siglo XIV adornado con 30 estatuas barrocas. Recórrelo al amanecer o de noche para evitar las masas.</div>
+                        <div class="place-meta"><span class="tag tag-massive">Ultra Masivo</span></div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">3</div>
+                    <div class="place-info">
+                        <div class="place-name">Castillo de Praga &amp; Catedral de San Vito</div>
+                        <div class="place-tagline">El complejo fortificado antiguo más grande del mundo. La gótica Catedral de San Vito domina todo el complejo arquitectónico.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">4</div>
                     <div class="place-info">
                         <div class="place-name">Jardín Vrtba (Vrtbovská zahrada)</div>
-                        <div class="place-tagline">Jardín italiano barroco de terrazas escalonadas oculto detrás de una puerta sin marcas en Malá Strana. Sin aglomeraciones.</div>
+                        <div class="place-tagline">Espectacular jardín barroco italiano en terrazas oculto tras un muro en Malá Strana. Desconectado por completo del turismo masivo.</div>
+                        <div class="place-meta"><span class="tag tag-hidden">Joya Oculta</span></div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">5</div>
+                    <div class="place-info">
+                        <div class="place-name">Barrio Judío (Josefov)</div>
+                        <div class="place-tagline">Zona histórica compacta que alberga sinagogas medievales e impresionantes cementerios superpuestos. Alto valor histórico.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">6</div>
+                    <div class="place-info">
+                        <div class="place-name">Callejón del Oro</div>
+                        <div class="place-tagline">Pequeña calle peatonal dentro del castillo con casas de colores del siglo XVI. Atractivo, pero se llena demasiado y requiere ticket pago.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">7</div>
+                    <div class="place-info">
+                        <div class="place-name">Colina Petřín &amp; Torre de Observación</div>
+                        <div class="place-tagline">Gran parque elevado con una torre de acero similar a la Eiffel. Ofrece buenas vistas, pero requiere una caminata larga y empinada.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">8</div>
+                    <div class="place-info">
+                        <div class="place-name">Plaza de Wenceslao</div>
+                        <div class="place-tagline">Bulevar comercial moderno con alta carga histórica del siglo XX. Esencialmente una avenida comercial llena de tiendas internacionales y hoteles.</div>
                     </div>
                 </div>
 
@@ -185,17 +276,54 @@
             <div class="city-section">
                 <div class="city-label" style="color:var(--c-bra)"><div class="dot" style="background:var(--c-bra)"></div>Bratislava</div>
                 
-                <div class="section-sub">Atracciones e Imperdibles</div>
-                <div class="roadmap-item">
+                <div class="section-sub">Ranking de Atracciones (8 de mejor a peor)</div>
+                <div class="roadmap-item"><div class="place-rank">1</div>
                     <div class="place-info">
-                        <div class="place-name">Casco Antiguo, Estatua Čumil &amp; Iglesia Azul</div>
-                        <div class="place-tagline">Centro peatonal compacto, monumentos irónicos de bronce y la fotogénica iglesia Art Nouveau completamente celeste.</div>
+                        <div class="place-name">Casco Antiguo (Staré Mesto) &amp; Estatua Čumil</div>
+                        <div class="place-tagline">Centro peatonal sumamente compacto, limpio y lleno de encanto. Diviértete buscando las irónicas estatuas de bronce callejeras.</div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">2</div>
+                    <div class="place-info">
+                        <div class="place-name">Iglesia Azul (Modrý Kostolík)</div>
+                        <div class="place-tagline">Templo Art Nouveau de cuento de hadas, completamente pintado en tonos celestes y decorado con azulejos brillantes. Muy fotogénica.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">3</div>
+                    <div class="place-info">
+                        <div class="place-name">Castillo de Bratislava</div>
+                        <div class="place-tagline">Estructura rectangular blanca con torres que corona la colina junto al Danubio. Los jardines barrocos ofrecen vistas excelentes hacia Austria.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">4</div>
                     <div class="place-info">
                         <div class="place-name">Línea de Búnkeres BS-8</div>
-                        <div class="place-tagline">Fortificaciones de hormigón intactas de la Segunda Guerra Mundial y la Guerra Fría en la frontera boscosa con Austria.</div>
+                        <div class="place-tagline">Complejo fortificado de hormigón real de la Segunda Guerra Mundial y Guerra Fría en plena frontera boscosa. Auténtico e impactante.</div>
+                        <div class="place-meta"><span class="tag tag-hidden">Joya Oculta</span></div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">5</div>
+                    <div class="place-info">
+                        <div class="place-name">Puente SNP &amp; Mirador UFO</div>
+                        <div class="place-tagline">Estructura de ingeniería de la era comunista rematada con un restaurante con forma de platillo volador a 95 metros de altura sobre el río.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">6</div>
+                    <div class="place-info">
+                        <div class="place-name">Puerta de San Miguel</div>
+                        <div class="place-tagline">La única puerta medieval de acceso a la ciudad que sigue en pie. Alberga un pequeño museo de armas y una torre angosta de paso obligado.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">7</div>
+                    <div class="place-info">
+                        <div class="place-name">Monumento Slavín</div>
+                        <div class="place-tagline">Monumento militar soviético masivo y cementerio de soldados rusos situado en una colina residencial. Interesante, pero exige subir muchas escaleras.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">8</div>
+                    <div class="place-info">
+                        <div class="place-name">Palacio Primacial</div>
+                        <div class="place-tagline">Estructura neoclásica rosa donde se firmaron tratados históricos. Bonito por fuera, pero sus interiores son salones de tapices bastante convencionales.</div>
                     </div>
                 </div>
 
@@ -211,17 +339,54 @@
             <div class="city-section">
                 <div class="city-label" style="color:var(--c-bud)"><div class="dot" style="background:var(--c-bud)"></div>Budapest</div>
                 
-                <div class="section-sub">Atracciones e Imperdibles</div>
-                <div class="roadmap-item">
+                <div class="section-sub">Ranking de Atracciones (8 de mejor a peor)</div>
+                <div class="roadmap-item"><div class="place-rank">1</div>
                     <div class="place-info">
-                        <div class="place-name">Bastión de los Pescadores &amp; Parlamento</div>
-                        <div class="place-tagline">Mirador fortificado neogótico en la colina de Buda. Ofrece la panorámica simétrica perfecta frente al Parlamento iluminado.</div>
+                        <div class="place-name">Bastión de los Pescadores &amp; Iglesia de Matías</div>
+                        <div class="place-tagline">Mirador fortificado neogótico que parece un castillo de arena gigante en la colina de Buda. Panorámica simétrica perfecta del Parlamento.</div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">2</div>
                     <div class="place-info">
-                        <div class="place-name">Szimpla Kert &amp; Ruin Bars</div>
-                        <div class="place-tagline">Fábrica abandonada reconvertida en bar multinivel con decoración reciclada, arte urbano y salas de neón.</div>
+                        <div class="place-name">Szimpla Kert &amp; Distrito de los Ruin Bars</div>
+                        <div class="place-tagline">El Ruin Bar original instalado en una fábrica abandonada. Múltiples habitaciones interconectadas con decoración caótica y luces de neón.</div>
+                        <div class="place-meta"><span class="tag tag-massive">Masivo</span></div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">3</div>
+                    <div class="place-info">
+                        <div class="place-name">Vistas al Parlamento desde el Río Danubio</div>
+                        <div class="place-tagline">El edificio gótico más imponente de Europa. La vista nocturna desde la orilla opuesta (Batthyány tér) es insuperable.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">4</div>
+                    <div class="place-info">
+                        <div class="place-name">Zapatos en el Paseo del Danubio</div>
+                        <div class="place-tagline">Monumento conmemorativo compuesto por 60 pares de zapatos de hierro fundido a la orilla del río. Un punto histórico de profunda emotividad.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">5</div>
+                    <div class="place-info">
+                        <div class="place-name">Termas Széchenyi o Gellért</div>
+                        <div class="place-tagline">Baños termales históricos en palacios neo-barrocos o art nouveau. Experiencia icónica húngara, aunque suele haber demasiada gente los fines de semana.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">6</div>
+                    <div class="place-info">
+                        <div class="place-name">Puente de las Cadenas &amp; Colina del Castillo</div>
+                        <div class="place-tagline">El primer puente permanente que unió Buda y Pest. El complejo del palacio real es enorme, pero muchos interiores fueron reconstruidos sin el lujo original.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">7</div>
+                    <div class="place-info">
+                        <div class="place-name">Mercado Central (Nagyvásárcsarnok)</div>
+                        <div class="place-tagline">Gran mercado de tres plantas. Es ideal en la planta baja para ver embutidos y pimentón, pero el piso superior de comida está muy masificado y es caro.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">8</div>
+                    <div class="place-info">
+                        <div class="place-name">Plaza de los Héroes &amp; Parque Városliget</div>
+                        <div class="place-tagline">Plaza monumental con estatuas de los líderes de las tribus fundadoras. Espacio muy abierto y llano, pero arquitectónicamente algo frío y monótono.</div>
                     </div>
                 </div>
 
@@ -237,17 +402,54 @@
             <div class="city-section">
                 <div class="city-label" style="color:var(--c-bel)"><div class="dot" style="background:var(--c-bel)"></div>Gante</div>
                 
-                <div class="section-sub">Atracciones e Imperdibles</div>
-                <div class="roadmap-item">
+                <div class="section-sub">Ranking de Atracciones (8 de mejor a peor)</div>
+                <div class="roadmap-item"><div class="place-rank">1</div>
                     <div class="place-info">
-                        <div class="place-name">Muelles de Graslei, Korenlei &amp; Castillo Gravensteen</div>
-                        <div class="place-tagline">Puerto medieval flanqueado por casas gremiales históricas y fortaleza del siglo XII rodeada por un foso de agua.</div>
+                        <div class="place-name">Muelles de Graslei &amp; Korenlei</div>
+                        <div class="place-tagline">Antiguo puerto medieval en pleno centro de la ciudad. Flanqueado por las casas gremiales flamencas mejor conservadas de Bélgica. Espectacular.</div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">2</div>
                     <div class="place-info">
-                        <div class="place-name">Taberna Dulle Griet</div>
-                        <div class="place-tagline">El bar belga tradicional donde dejas un zapato como fianza en una jaula del techo si pides su cerveza gigante de 1.2 litros.</div>
+                        <div class="place-name">Castillo de los Condes (Gravensteen)</div>
+                        <div class="place-tagline">Fortaleza medieval de piedra del siglo XII con foso de agua perimetral e interiores perfectamente conservados en pleno casco urbano.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">3</div>
+                    <div class="place-info">
+                        <div class="place-name">Puente de San Miguel (Sint-Michielsbrug)</div>
+                        <div class="place-tagline">El único mirador urbano desde donde se alinean de forma perfectamente lineal las tres torres medievales icónicas de Gante.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">4</div>
+                    <div class="place-info">
+                        <div class="place-name">Torre Campanario (Belfort)</div>
+                        <div class="place-tagline">Torre de 91 metros con un dragón dorado en la cúspide. Alberga el carillón histórico y se puede subir en ascensor para ver vistas aéreas completas.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">5</div>
+                    <div class="place-info">
+                        <div class="place-name">Catedral de San Babón &amp; El Políptico del Cordero Místico</div>
+                        <div class="place-tagline">Templo gótico severo de piedra que resguarda una de las obras cumbre de la pintura flamenca medieval realizada por los hermanos Van Eyck.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">6</div>
+                    <div class="place-info">
+                        <div class="place-name">Barrio de Patershol</div>
+                        <div class="place-tagline">Laberinto de callejones de piedra del siglo XVII situado detrás del castillo. Zona bohemia, silenciosa y residencial de arquitectura antigua.</div>
+                        <div class="place-meta"><span class="tag tag-hidden">Joya Oculta</span></div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">7</div>
+                    <div class="place-info">
+                        <div class="place-name">Callejón de los Graffitis (Werregarenstraatje)</div>
+                        <div class="place-tagline">Pasaje peatonal estrecho donde el arte urbano y los graffitis están permitidos legalmente. Colorido y curioso para una caminata de 5 minutos.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">8</div>
+                    <div class="place-info">
+                        <div class="place-name">Iglesia de San Nicolás</div>
+                        <div class="place-tagline">Gran templo gótico construido en el centro comercial con piedra azulada local. Bonito por fuera, pero sus interiores son despojados y bastante convencionales.</div>
                     </div>
                 </div>
 
@@ -263,17 +465,55 @@
             <div class="city-section">
                 <div class="city-label" style="color:var(--c-mad)"><div class="dot" style="background:var(--c-mad)"></div>Madrid</div>
                 
-                <div class="section-sub">Atracciones e Imperdibles</div>
-                <div class="roadmap-item">
+                <div class="section-sub">Ranking de Atracciones (8 de mejor a peor)</div>
+                <div class="roadmap-item"><div class="place-rank">1</div>
                     <div class="place-info">
-                        <div class="place-name">Museo Nacional del Prado &amp; Parque del Retiro</div>
-                        <div class="place-tagline">Pinacoteca de categoría mundial combinada con los senderos reales y el Palacio de Cristal del gran pulmón verde de la capital.</div>
+                        <div class="place-name">Museo Nacional del Prado</div>
+                        <div class="place-tagline">Una de las pinacotecas más importantes del planeta. Imprescindible ver obras maestras de Velázquez (Las Meninas), Goya y El Bosco. Entrada gratis últimas 2 horas.</div>
                     </div>
                 </div>
-                <div class="roadmap-item">
+                <div class="roadmap-item"><div class="place-rank">2</div>
+                    <div class="place-info">
+                        <div class="place-name">Parque del Retiro &amp; Palacio de Cristal</div>
+                        <div class="place-tagline">El pulmón verde real de la capital. Camina bajo sus árboles monumentales y visita la etérea estructura de hierro y cristal junto al lago.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">3</div>
+                    <div class="place-info">
+                        <div class="place-name">Palacio Real &amp; Jardines de Sabatini</div>
+                        <div class="place-tagline">La residencia oficial de la monarquía más grande de Europa Occidental. La arquitectura exterior exteriorizada sobre la Plaza de la Armería es colosal.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">4</div>
+                    <div class="place-info">
+                        <div class="place-name">Plaza Mayor &amp; Arco de Cuchilleros</div>
+                        <div class="place-tagline">Plaza porticada de diseño herreriano del siglo XVII en pleno centro del Madrid de los Austrias. Punto clave para comer el bocadillo de calamares.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">5</div>
+                    <div class="place-info">
+                        <div class="place-name">Templo de Debod</div>
+                        <div class="place-tagline">Auténtico templo egipcio del siglo II a.C. donado a España e instalado en un parque elevado. El mejor mirador urbano para ver el atardecer.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">6</div>
                     <div class="place-info">
                         <div class="place-name">Andén 0 (Estación Fantasma de Chamberí)</div>
-                        <div class="place-tagline">Estación de metro clausurada de 1919. Conserva las taquillas de madera y carteles publicitarios de azulejos intactos. Entrada gratis con reserva.</div>
+                        <div class="place-tagline">Estación de metro clausurada de 1919 congelada en el tiempo. Conserva carteles publicitarios de azulejos intactos. Entrada libre con reserva previa.</div>
+                        <div class="place-meta"><span class="tag tag-hidden">Joya Oculta</span></div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">7</div>
+                    <div class="place-info">
+                        <div class="place-name">Puerta del Sol &amp; Gran Vía</div>
+                        <div class="place-tagline">Kilómetro cero y principal arteria comercial. Es vibrante e imponente, pero excesivamente ruidosa, masificada y repleta de franquicias genéricas.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item"><div class="place-rank">8</div>
+                    <div class="place-info">
+                        <div class="place-name">Mercado de San Miguel</div>
+                        <div class="place-tagline">Estructura histórica de hierro muy vistosa. Sin embargo, su oferta gastronómica está totalmente enfocada al turismo de alto costo, perdiendo carácter local.</div>
+                        <div class="place-meta"><span class="tag tag-massive">Ultra Masivo</span></div>
                     </div>
                 </div>
 
@@ -412,13 +652,13 @@
         `);
     };
 
-    addPlace(41.15, -8.62, '#ef4444', 'Oporto Histórico', 'Lello, Clérigos, Ribeira, sándwiches de pernil y bifanas.');
-    addPlace(50.11, 8.68, '#818cf8', 'Frankfurt Centro', 'Römerberg, Main Tower, mercado Kleinmarkthalle y tabernas.');
-    addPlace(50.08, 14.41, '#f87171', 'Praga Antigua', 'Puente Carlos, Castillo, jardín Vrtba y tabernas Lokál.');
-    addPlace(48.14, 17.10, '#fbbf24', 'Bratislava Centro', 'Casco Viejo, Iglesia Azul, búnkeres de guerra y Slovak Pub.');
-    addPlace(47.49, 19.04, '#10b981', 'Budapest Imperial', 'Bastión, Ruin Bars, puestos de Lángos y cocina tradicional.');
-    addPlace(51.05, 3.72, '#facc15', 'Gante Canales', 'Muelles Graslei, Castillo Gravensteen y friteries locales.');
-    addPlace(40.41, -3.70, '#ff7a00', 'Madrid de las Letras', 'Museo del Prado, Chamberí, bocadillos de calamares y tapeo.');
+    addPlace(41.15, -8.62, '#ef4444', 'Oporto Histórico', 'Ribeira, Clérigos, Virtudes y São Bento.');
+    addPlace(50.11, 8.68, '#818cf8', 'Frankfurt Centro', 'Römerberg, Main Tower, Sachsenhausen y puentes.');
+    addPlace(50.08, 14.41, '#f87171', 'Praga Antigua', 'Reloj Astronómico, Puente Carlos, Castillo y jardín Vrtba.');
+    addPlace(48.14, 17.10, '#fbbf24', 'Bratislava Centro', 'Casco Viejo, Iglesia Azul, búnkeres BS-8 y mirador UFO.');
+    addPlace(47.49, 19.04, '#10b981', 'Budapest Imperial', 'Bastión, Ruin Bars, Parlamento y termas Széchenyi.');
+    addPlace(51.05, 3.72, '#facc15', 'Gante Canales', 'Muelles Graslei, Castillo Gravensteen y Puente San Miguel.');
+    addPlace(40.41, -3.70, '#ff7a00', 'Madrid de las Letras', 'Museo del Prado, El Retiro, Palacio Real y Chamberí.');
 </script>
 </body>
 </html>
