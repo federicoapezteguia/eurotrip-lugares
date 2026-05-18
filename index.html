@@ -3,198 +3,392 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Eurotrip 2026 — Plan Maestro</title>
+    <title>Eurotrip 2026 — Atlas de Descubrimientos & Logística</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #05070a; --surface: #0f1219; --border: rgba(255,255,255,0.08); --text: #f0f2f5; --muted: #6b7280;
-            --c-por: #ef4444; --c-fra: #818cf8; --c-pra: #f87171; --c-bra: #fbbf24; --c-bud: #10b981; --c-bel: #facc15;
+            --c-por: #ef4444; --c-fra: #818cf8; --c-pra: #f87171; --c-bra: #fbbf24; --c-bud: #10b981; --c-bel: #facc15; --c-mad: #ff7a00;
         }
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         body{ background:var(--bg); color:var(--text); font-family:'Inter', sans-serif; min-height:100vh; padding-bottom: 50px; }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 1fr 420px; gap: 32px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 1fr 450px; gap: 32px; }
         @media (max-width: 1100px) { .container { grid-template-columns: 1fr; } }
 
-        header { margin-bottom: 40px; }
+        header { margin-bottom: 40px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap;}
         h1 { font-family:'Outfit', sans-serif; font-size: 64px; font-weight: 800; letter-spacing: -3px; line-height: 1; }
+        .subtitle { font-family: 'JetBrains Mono'; color: var(--muted); font-size: 14px; text-transform: uppercase; letter-spacing: 2px;}
 
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; margin-bottom: 24px; }
-        .card-header { padding: 16px 24px; border-bottom: 1px solid var(--border); font-family: 'Outfit', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 700; background: rgba(255,255,255,0.01); }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; margin-bottom: 32px; }
+        .card-header { padding: 18px 24px; border-bottom: 1px solid var(--border); font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #fff; font-weight: 700; background: rgba(255,255,255,0.02); }
 
-        .etapa-label { padding: 12px 24px; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; background: rgba(255,255,255,0.03); color: var(--muted); border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); }
-        .etapa-label:first-of-type { border-top: none; }
-
-        /* ITINERARIO */
-        .roadmap-item { display: flex; gap: 20px; padding: 22px 24px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .loc-title { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
-        .city-name { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 600; color: #fff; line-height: 1.2; }
-        .info-sub { font-size: 12px; color: var(--muted); font-family: 'JetBrains Mono'; margin: 6px 0; }
-        .stay-info { font-size: 13px; color: #fff; opacity: 0.9; margin-top: 8px; font-weight: 500; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 12px; }
-        .stay-addr { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono'; display: block; margin-top: 4px; }
-
-        /* FINANZAS */
-        .eco-grid { padding: 20px; }
-        .per-person-card { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 20px; border: 1px solid var(--border); }
-        .per-person-label { font-size: 9px; color: var(--muted); letter-spacing: 1px; margin-bottom: 3px; }
-        .per-person-val { font-family: 'Outfit'; font-size: 32px; font-weight: 800; color: #fff; }
-
-        .eco-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .eco-table th { text-align: left; font-size: 9px; color: var(--muted); padding-bottom: 8px; text-transform: uppercase; }
-        .eco-table td { padding: 8px 0; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .city-section { border-bottom: 1px solid var(--border); padding-bottom: 20px;}
+        .city-section:last-child { border-bottom: none; }
         
-        .balance-box { background: rgba(255,255,255,0.02); border-radius: 12px; padding: 15px; border: 1px solid var(--border); }
-        .balance-title { font-size: 10px; font-weight: 800; margin-bottom: 10px; color: var(--muted); text-transform: uppercase; }
-        .debt-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
-        .val { font-family: 'JetBrains Mono'; font-weight: 600; color: #fff; }
+        .city-label { padding: 18px 24px; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; background: rgba(255,255,255,0.01); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border);}
 
-        #map { height: 400px; width: 100%; background: #000; }
-        .cal-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
-        .cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 9px; border-radius: 5px; background: rgba(255,255,255,0.02); color: #4b5563; }
-        .cal-active { font-weight: 800; color: #000; }
+        .section-sub { font-family: 'Outfit', sans-serif; font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; padding: 16px 24px 4px 24px; font-weight: 700;}
+
+        /* ITEMS */
+        .roadmap-item { display: flex; gap: 20px; padding: 12px 24px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .roadmap-item:last-child { border-bottom: none; }
+        
+        .place-info { flex: 1; }
+        .place-name { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 600; color: #fff; line-height: 1.2; margin-bottom: 4px;}
+        .place-tagline { font-size: 13px; color: #cbd5e1; font-family: 'Inter'; line-height: 1.4;}
+        .expert-tip { font-size: 12px; color: #94a3b8; font-style: italic; margin-top: 4px; display: block;}
+        .expert-tip strong { color: #f8fafc; font-style: normal; font-family: 'JetBrains Mono'; font-size: 11px;}
+
+        /* LISTAS DE COMIDA */
+        .food-list { margin: 8px 24px; padding-left: 20px; font-size: 13px; color: #cbd5e1; line-height: 1.6; }
+        .food-list li { margin-bottom: 6px; }
+        .food-list strong { color: #fff; }
+
+        /* TRANSPORTE DIRECTO */
+        .transport-direct { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); margin: 12px 24px; padding: 16px; border-radius: 16px; }
+        .direct-list { list-style: none; }
+        .direct-list li { font-size: 13px; color: #cbd5e1; margin-bottom: 8px; line-height: 1.4; padding-left: 15px; position: relative;}
+        .direct-list li::before { content: "➔"; position: absolute; left: 0; color: inherit; font-size: 11px; }
+        .direct-list strong { color: #fff; font-family: 'JetBrains Mono'; font-size: 12px; text-transform: uppercase; }
+
+        .place-meta { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;}
+        .tag { font-family: 'JetBrains Mono'; font-size: 8px; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; font-weight: 600;}
+        .tag-massive { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2);}
+        .tag-hidden { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2);}
+        .tag-food { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2);}
+        .tag-app { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); text-transform: none; font-size: 9px;}
+
+        #map { height: 500px; width: 100%; background: #000; border-radius: 16px; }
+        .sidebar-sticky { position: sticky; top: 24px; }
         .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        
+        .leaflet-popup-content-wrapper { background: var(--surface) !important; color: var(--text) !important; border: 1px solid var(--border); border-radius: 12px; font-family: 'Inter', sans-serif; }
+        .leaflet-popup-tip { background: var(--surface) !important; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="main-content">
-        <header><h1>Eurotrip <span>2026</span></h1></header>
+        <header>
+            <h1>Atlas<span>2026</span></h1>
+            <div class="subtitle">Secciones Optimizadas & Órdenes Logísticas</div>
+        </header>
         
+        <!-- SECCIÓN 1: ATRACCIONES Y GASTRONOMÍA -->
         <div class="card">
-            <div class="card-header">Itinerario Detallado</div>
+            <div class="card-header">Sección I: Inmersión Urbana e Imperdibles Gastronómicos</div>
             
-            <div class="etapa-label">Etapa 1: Grupo (Tulio, Tone & Fede)</div>
-            
-            <div class="roadmap-item">
-                <div style="flex:1">
-                    <div class="loc-title" style="color:var(--c-por)"><div class="dot" style="background:var(--c-por)"></div>Portugal</div>
-                    <div class="city-name">Oporto y Braga</div>
-                    <div class="info-sub">22/05 — 24/05</div>
-                </div>
-            </div>
-
-            <div class="roadmap-item">
-                <div style="flex:1">
-                    <div class="loc-title" style="color:var(--c-fra)"><div class="dot" style="background:var(--c-fra)"></div>Alemania</div>
-                    <div class="city-name">Frankfurt</div>
-                    <div class="info-sub">24/05 — 26/05</div>
-                    <div class="stay-info">Airbnb
-                        <span class="stay-addr">Stiftsrabe 22, Frankfurt</span>
+            <!-- PORTUGAL (SOLO OPORTO) -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-por)"><div class="dot" style="background:var(--c-por)"></div>Oporto</div>
+                
+                <div class="section-sub">Atracciones e Imperdibles</div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Librería Lello &amp; Torre de los Clérigos</div>
+                        <div class="place-tagline">Icono neogótico. Escaleras con vistas completas de la ciudad vieja. Entrada con reserva previa online obligatoria.</div>
+                        <div class="place-meta"><span class="tag tag-massive">Ultra Masivo</span></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="roadmap-item">
-                <div style="flex:1">
-                    <div class="loc-title" style="color:var(--c-pra)"><div class="dot" style="background:var(--c-pra)"></div>República Checa</div>
-                    <div class="city-name">Praga</div>
-                    <div class="info-sub">26/05 — 28/05</div>
-                    <div class="stay-info">Airbnb
-                        <span class="stay-addr">Skorepka 3, Praga</span>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Barrio de Ribeira &amp; Puente Dom Luís I</div>
+                        <div class="place-tagline">Paseo medieval costero. Cruza a pie por la plataforma superior al atardecer para ver las bodegas iluminadas.</div>
+                        <div class="place-meta"><span class="tag tag-massive">Masivo</span></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="roadmap-item">
-                <div style="flex:1">
-                    <div class="loc-title" style="color:var(--c-bra)"><div class="dot" style="background:var(--c-bra)"></div>Eslovaquia</div>
-                    <div class="city-name">Bratislava</div>
-                    <div class="info-sub">28/05 — 29/05</div>
-                    <div class="stay-info">Airbnb
-                        <span class="stay-addr">Zidovska 19, Bratislava</span>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Mirador de las Virtudes &amp; Jardines del Palacio de Cristal</div>
+                        <div class="place-tagline">Anfiteatros verdes donde los locales ven la puesta de sol de cara al río Duero. Pavos reales libres.</div>
+                        <div class="place-meta"><span class="tag tag-hidden">Joya Oculta</span></div>
                     </div>
                 </div>
+
+                <div class="section-sub">Lugares Recomendados para Comer (Económicos)</div>
+                <ul class="food-list">
+                    <li><strong>Café Santiago / Brasão Cervejaria:</strong> Francesinhas abundantes (sándwich de carnes con queso fundido y salsa picante). Se comparte perfectamente entre dos.</li>
+                    <li><strong>Casa Guedes:</strong> Famoso por sus sándwiches de *pernil* (cerdo asado desmechado) con queso de oveja blando por menos de €6.</li>
+                    <li><strong>Conga:</strong> Especialistas en *bifanas* (sándwiches tradicionales de cerdo marinado picante), una de las opciones de street food más baratas de Portugal (€3).</li>
+                    <li><strong>Mercado do Bolhão:</strong> Puestos internos con pescados frescos, empanadas locales y copas de vino de Oporto desde €2.</li>
+                </ul>
             </div>
 
-            <div class="roadmap-item">
-                <div style="flex:1">
-                    <div class="loc-title" style="color:var(--c-bud)"><div class="dot" style="background:var(--c-bud)"></div>Hungría</div>
-                    <div class="city-name">Budapest</div>
-                    <div class="info-sub">29/05 — 01/06</div>
-                    <div class="stay-info">Airbnb
-                        <span class="stay-addr">Baross utca 98, Budapest</span>
+            <!-- FRANKFURT -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-fra)"><div class="dot" style="background:var(--c-fra)"></div>Frankfurt</div>
+                
+                <div class="section-sub">Atracciones e Imperdibles</div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Römerberg &amp; Catedral de San Bartolomé</div>
+                        <div class="place-tagline">Plaza histórica central reconstruida con entramados de madera tradicionales y catedral gótica imperial de piedra roja.</div>
                     </div>
                 </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Plataforma de la Main Tower</div>
+                        <div class="place-tagline">Terraza abierta a 200 metros sobre los rascacielos financieros. Control de seguridad estricto en el ingreso.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Barrio Histórico de Sachsenhausen (Alt-Sachs)</div>
+                        <div class="place-tagline">Callejones de piedra antiguos que sobrevivieron a la guerra. Zona de tabernas tradicionales de sidra de manzana.</div>
+                    </div>
+                </div>
+
+                <div class="section-sub">Lugares Recomendados para Comer (Económicos)</div>
+                <ul class="food-list">
+                    <li><strong>Adolf Wagner / Zum Gemalten Haus:</strong> Tabernas en Sachsenhausen. Pide *Frankfurter Rippchen* (chuleta ahumada) o *Grüne Soße* (salsa de 7 hierbas con papas y huevo). Precios razonables y porciones masivas.</li>
+                    <li><strong>Kleinmarkthalle:</strong> Mercado techado cerrado. Busca el puesto de salchichas *Schreiber* para comer al paso la auténtica Fleischwurst por pocos euros.</li>
+                    <li><strong>Best Worscht in Town:</strong> Cadena de Currywurst local. Elige el nivel de picante y el tipo de salsa. Rápido, llenador y muy barato.</li>
+                </ul>
             </div>
 
-            <div class="etapa-label">Etapa 2: Dúo (Tone & Fede)</div>
-
-            <div class="roadmap-item">
-                <div style="flex:1">
-                    <div class="loc-title" style="color:var(--c-bud)"><div class="dot" style="background:var(--c-bud)"></div>Hungría</div>
-                    <div class="city-name">Budapest (Transición)</div>
-                    <div class="info-sub">01/06 — 02/06</div>
-                    <div class="stay-info">Wombat's City Hostel
-                        <span class="stay-addr">Király u. 20, Budapest</span>
+            <!-- PRAGA -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-pra)"><div class="dot" style="background:var(--c-pra)"></div>Praga</div>
+                
+                <div class="section-sub">Atracciones e Imperdibles</div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Puente Carlos &amp; Plaza de la Ciudad Vieja</div>
+                        <div class="place-tagline">Puente gótico del siglo XIV flanqueado por estatuas y plaza central que alberga el Reloj Astronómico medieval.</div>
                     </div>
                 </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Castillo de Praga &amp; Callejón del Oro</div>
+                        <div class="place-tagline">Complejo fortificado medieval con la Catedral de San Vito y las casitas de antiguos alquimistas y guardianes.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Jardín Vrtba (Vrtbovská zahrada)</div>
+                        <div class="place-tagline">Jardín italiano barroco de terrazas escalonadas oculto detrás de una puerta sin marcas en Malá Strana. Sin aglomeraciones.</div>
+                    </div>
+                </div>
+
+                <div class="section-sub">Lugares Recomendados para Comer (Económicos)</div>
+                <ul class="food-list">
+                    <li><strong>Lokál (Dlouhááá o U Bílé kuželky):</strong> Comida checa casera excelente. Pide el Goulash, queso frito (*Smažený sýr*) y cerveza Pilsner Urquell tirada directa de tanque a precio local.</li>
+                    <li><strong>U Parlamentu:</strong> Taberna tradicional checa clásica cerca del centro. Platos pesados de carne, albóndigas de pan (*knedlíky*) y porciones enormes a precios bajos.</li>
+                    <li><strong>Havelská Koruna:</strong> Restaurante estilo cantina/comedor escolar auto-servicio. Eliges los platos tradicionales directamente en el mostrador, pagas al salir con una tarjeta que te sellan. Extremadamente barato.</li>
+                </ul>
             </div>
 
-            <div class="roadmap-item">
-                <div style="flex:1">
-                    <div class="loc-title" style="color:var(--c-bel)"><div class="dot" style="background:var(--c-bel)"></div>Bélgica</div>
-                    <div class="city-name">Gante</div>
-                    <div class="info-sub">02/06 — 06/06</div>
-                    <div class="stay-info">KaBa Hostel
-                        <span class="stay-addr">Filips van Arteveldestraat 35, Gante</span>
+            <!-- BRATISLAVA -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-bra)"><div class="dot" style="background:var(--c-bra)"></div>Bratislava</div>
+                
+                <div class="section-sub">Atracciones e Imperdibles</div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Casco Antiguo, Estatua Čumil &amp; Iglesia Azul</div>
+                        <div class="place-tagline">Centro peatonal compacto, monumentos irónicos de bronce y la fotogénica iglesia Art Nouveau completamente celeste.</div>
                     </div>
                 </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Línea de Búnkeres BS-8</div>
+                        <div class="place-tagline">Fortificaciones de hormigón intactas de la Segunda Guerra Mundial y la Guerra Fría en la frontera boscosa con Austria.</div>
+                    </div>
+                </div>
+
+                <div class="section-sub">Lugares Recomendados para Comer (Económicos)</div>
+                <ul class="food-list">
+                    <li><strong>Slovak Pub:</strong> Taberna universitaria gigante de madera estructurada en habitaciones históricas. Pide *Bryndzové Halušky* (ñoquis locales con queso de oveja y panceta) por muy pocos euros.</li>
+                    <li><strong>Flag Ship Restaurant:</strong> Ubicado en un antiguo cine reconvertido en un enorme salón cervecero. Mismo menú tradicional que el Slovak Pub, excelente relación precio-calidad.</li>
+                    <li><strong>Richman Puestos Callejeros:</strong> Busca los quioscos que venden el sándwich local "Richman" (pan relleno de carne picada, repollo y mayonesa), un clásico nocturno hiper económico.</li>
+                </ul>
+            </div>
+
+            <!-- BUDAPEST -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-bud)"><div class="dot" style="background:var(--c-bud)"></div>Budapest</div>
+                
+                <div class="section-sub">Atracciones e Imperdibles</div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Bastión de los Pescadores &amp; Parlamento</div>
+                        <div class="place-tagline">Mirador fortificado neogótico en la colina de Buda. Ofrece la panorámica simétrica perfecta frente al Parlamento iluminado.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Szimpla Kert &amp; Ruin Bars</div>
+                        <div class="place-tagline">Fábrica abandonada reconvertida en bar multinivel con decoración reciclada, arte urbano y salas de neón.</div>
+                    </div>
+                </div>
+
+                <div class="section-sub">Lugares Recomendados para Comer (Económicos)</div>
+                <ul class="food-list">
+                    <li><strong>Retró Lángos Büfé:</strong> El mejor lugar de comida callejera para probar *Lángos* (masa frita untada en ajo, crema agria y montañas de queso gouda). Llenador y muy barato.</li>
+                    <li><strong>Gettó Gulyás:</strong> En pleno barrio judío. Sirve guisos tradicionales (*Pörkölt*) y sopa Goulash en un ambiente rústico con precios excelentes para su calidad.</li>
+                    <li><strong>Frici Papa kifőzdéje:</strong> Un comedor tradicional húngaro clásico de paso. Cero lujos, servicio rápido de platos caseros locales por precios ridículamente bajos.</li>
+                </ul>
+            </div>
+
+            <!-- GANTE -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-bel)"><div class="dot" style="background:var(--c-bel)"></div>Gante</div>
+                
+                <div class="section-sub">Atracciones e Imperdibles</div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Muelles de Graslei, Korenlei &amp; Castillo Gravensteen</div>
+                        <div class="place-tagline">Puerto medieval flanqueado por casas gremiales históricas y fortaleza del siglo XII rodeada por un foso de agua.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Taberna Dulle Griet</div>
+                        <div class="place-tagline">El bar belga tradicional donde dejas un zapato como fianza en una jaula del techo si pides su cerveza gigante de 1.2 litros.</div>
+                    </div>
+                </div>
+
+                <div class="section-sub">Lugares Recomendados para Comer (Económicos)</div>
+                <ul class="food-list">
+                    <li><strong>Friterie Jozef / Frituur t'Antwaarpse:</strong> Puestos de papas fritas belgas tradicionales (doble cocción en grasa). Elige salsas pesadas (Andaluza o Samurai). Almuerzo rápido por menos de €5.</li>
+                    <li><strong>Soup'R:</strong> Lugar pequeño especializado en sopas caseras abundantes que vienen acompañadas de pan artesanal fresco y frutas gratis. Ideal para días frescos.</li>
+                    <li><strong>Amadeus Gante:</strong> Si el presupuesto permite un pequeño extra, tienen un menú fijo de costillas de cerdo (*ribs*) libres "all you can eat" con papa asada por un precio cerrado imbatible.</li>
+                </ul>
+            </div>
+
+            <!-- MADRID -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-mad)"><div class="dot" style="background:var(--c-mad)"></div>Madrid</div>
+                
+                <div class="section-sub">Atracciones e Imperdibles</div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Museo Nacional del Prado &amp; Parque del Retiro</div>
+                        <div class="place-tagline">Pinacoteca de categoría mundial combinada con los senderos reales y el Palacio de Cristal del gran pulmón verde de la capital.</div>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="place-info">
+                        <div class="place-name">Andén 0 (Estación Fantasma de Chamberí)</div>
+                        <div class="place-tagline">Estación de metro clausurada de 1919. Conserva las taquillas de madera y carteles publicitarios de azulejos intactos. Entrada gratis con reserva.</div>
+                    </div>
+                </div>
+
+                <div class="section-sub">Lugares Recomendados para Comer (Económicos)</div>
+                <ul class="food-list">
+                    <li><strong>Bar La Campana:</strong> Ubicado junto a la Plaza Mayor. El bocadillo de calamares fritos más famoso, tierno, abundante y barato de la ciudad. Comer de pie.</li>
+                    <li><strong>El Tigre (Sidrería):</strong> Bar castizo de batalla. Pides una caña de cerveza o sidra grande y te sirven platos enormes de tapas gratis (patatas bravas, croquetas, jamón). Barato y ruidoso.</li>
+                    <li><strong>Takos Al Pastor:</strong> Cerca de la Gran Vía. Tacos mexicanos auténticos por €1.50 la unidad. Las filas avanzan rápido y el gasto final es mínimo.</li>
+                    <li><strong>Casa Toni:</strong> Taberna antigua auténtica para comer raciones tradicionales (oreja, bravas, pinchos) a precios de barrio en pleno centro de Madrid.</li>
+                </ul>
             </div>
         </div>
 
-        <div class="card"><div id="map"></div></div>
+        <!-- SECCIÓN 2: TRANSPORTE Y LOGÍSTICA DIRECTA -->
+        <div class="card">
+            <div class="card-header" style="color: #34d399; border-bottom-color: rgba(52, 211, 153, 0.3);">Sección II: Instrucciones Operativas de Transporte</div>
+            
+            <!-- OPORTO -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-por)"><div class="dot" style="background:var(--c-por)"></div>Oporto</div>
+                <div class="transport-direct" style="border-left: 3px solid var(--c-por)">
+                    <ul class="direct-list">
+                        <li><strong>Caminar el centro:</strong> Desplázate a pie por el casco viejo; usa el transporte solo para tramos largos debido a las pendientes.</li>
+                        <li><strong>Compra tarjeta Andante:</strong> Adquiere el plástico individual en las máquinas del metro (€0.60), no se puede compartir.</li>
+                        <li><strong>Usa Bolt de noche:</strong> Descarga la app Bolt para traslados grupales rápidos nocturnos o con equipaje; las tarifas son más bajas que el taxi de la calle.</li>
+                    </ul>
+                    <div class="place-meta"><span class="tag tag-app">Andante Card</span><span class="tag tag-app">Bolt App</span></div>
+                </div>
+            </div>
+
+            <!-- FRANKFURT -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-fra)"><div class="dot" style="background:var(--c-fra)"></div>Frankfurt</div>
+                <div class="transport-direct" style="border-left: 3px solid var(--c-fra)">
+                    <ul class="direct-list">
+                        <li><strong>Saca el Gruppenkarte:</strong> Compra el Pase Diario Grupal (hasta 5 personas). Viajan ilimitado en S-Bahn y U-Bahn todo el día por un precio fijo. Se amortiza al segundo viaje.</li>
+                        <li><strong>Evita billetes impresos:</strong> Gestiona y compra todo en formato digital desde el teléfono.</li>
+                        <li><strong>Descarga la app oficial:</strong> Usa DB Navigator para verificar andenes exactos, conexiones rápidas y retrasos ferroviarios en tiempo real.</li>
+                    </ul>
+                    <div class="place-meta"><span class="tag tag-app">DB Navigator</span><span class="tag tag-app">Gruppenkarte</span></div>
+                </div>
+            </div>
+
+            <!-- PRAGA -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-pra)"><div class="dot" style="background:var(--c-pra)"></div>Praga</div>
+                <div class="transport-direct" style="border-left: 3px solid var(--c-pra)">
+                    <ul class="direct-list">
+                        <li><strong>Prioriza el tranvía:</strong> Utiliza las líneas de tranvía; conectan toda la zona histórica de forma visual y económica.</li>
+                        <li><strong>Paga con Contactless:</strong> Haz tap con tu tarjeta bancaria o teléfono directamente en las terminales naranjas del interior del vagón.</li>
+                        <li><strong>Controla el tiempo:</strong> Los tickets valen por minutos (30 o 90 min). Puedes combinar tranvía, metro y bus mientras el tiempo siga corriendo.</li>
+                    </ul>
+                    <div class="place-meta"><span class="tag tag-app">PID Lítačka</span><span class="tag tag-app">Contactless Tap</span></div>
+                </div>
+            </div>
+
+            <!-- BRATISLAVA -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-bra)"><div class="dot" style="background:var(--c-bra)"></div>Bratislava</div>
+                <div class="transport-direct" style="border-left: 3px solid var(--c-bra)">
+                    <ul class="direct-list">
+                        <li><strong>Camina el casco viejo:</strong> El centro histórico es 100% peatonal.</li>
+                        <li><strong>Usa buses para los búnkeres:</strong> Compra boletos individuales por minutos en las máquinas o app para ir a los búnkeres de guerra BS-8 alejados.</li>
+                        <li><strong>Cotiza Uber/Bolt:</strong> Compara precios en las aplicaciones de transporte; para un grupo de 3 personas suele salir más barato que el transporte público.</li>
+                    </ul>
+                    <div class="place-meta"><span class="tag tag-app">IDS BK App</span><span class="tag tag-app">Uber / Bolt</span></div>
+                </div>
+            </div>
+
+            <!-- BUDAPEST -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-bud)"><div class="dot" style="background:var(--c-bud)"></div>Budapest</div>
+                <div class="transport-direct" style="border-left: 3px solid var(--c-bud)">
+                    <ul class="direct-list">
+                        <li><strong>Usa el Tranvía 2 como tour:</strong> Súbete a la línea 2 que costea el Danubio y pasa junto al Parlamento. Evita pagar barcos turísticos costosos.</li>
+                        <li><strong>Escanea el código QR:</strong> Valida de forma obligatoria tu ticket digital escaneando el adhesivo QR exterior del vagón antes de subir; si no lo haces, la multa es inmediata.</li>
+                        <li><strong>Evita taxis de la calle:</strong> Pide transporte exclusivamente mediante la app Bolt o utiliza los autobuses oficiales directos (100E) para conectar con el aeropuerto.</li>
+                    </ul>
+                    <div class="place-meta"><span class="tag tag-app">BudapestGO</span><span class="tag tag-app">Bolt / Bus 100E</span></div>
+                </div>
+            </div>
+
+            <!-- GANTE -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-bel)"><div class="dot" style="background:var(--c-bel)"></div>Gante</div>
+                <div class="transport-direct" style="border-left: 3px solid var(--c-bel)">
+                    <ul class="direct-list">
+                        <li><strong>Activa la tarifa Weekend:</strong> Saca los pasajes de tren internos (para ir a Brujas o Bruselas) de viernes por la tarde a domingo. La app aplica 50% de descuento automático.</li>
+                        <li><strong>Paga directo en el tranvía:</strong> Apoya tu tarjeta bancaria sin contacto en las terminales blancas dentro del vehículo de la red De Lijn.</li>
+                    </ul>
+                    <div class="place-meta"><span class="tag tag-app">SNCB Train</span><span class="tag tag-app">De Lijn Tap</span></div>
+                </div>
+            </div>
+
+            <!-- MADRID -->
+            <div class="city-section">
+                <div class="city-label" style="color:var(--c-mad)"><div class="dot" style="background:var(--c-mad)"></div>Madrid</div>
+                <div class="transport-direct" style="border-left: 3px solid var(--c-mad)">
+                    <ul class="direct-list">
+                        <li><strong>Compra el título Multi de 10 viajes:</strong> Adquiere la tarjeta plástica roja "Multi" (€2.50) en las máquinas del metro y cárgale el bono de 10 viajes (Metrobús).</li>
+                        <li><strong>Comparte el pase:</strong> Pasa la tarjeta por el lector del molinete y dásela en mano a tu compañero para que pase; este abono es multipersonal.</li>
+                        <li><strong>Valida solo al entrar:</strong> Introduce o apoya la tarjeta únicamente en los torniquetes de acceso; no se requiere validación para salir de la red de metro de Madrid.</li>
+                    </ul>
+                    <div class="place-meta"><span class="tag tag-app">Tarjeta Multi</span><span class="tag tag-app">Metro Madrid</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- MENÚ LATERAL: MAPA -->
     <aside class="sidebar">
-        <div class="card">
-            <div class="card-header">Calendario</div>
-            <div class="cal-container">
-                <div id="calM"></div><div id="calJ"></div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">Finanzas Etapa 1 (x3)</div>
-            <div class="eco-grid">
-                <div class="per-person-card" style="border-left: 4px solid var(--c-bud)">
-                    <div class="per-person-label">COSTO POR PERSONA</div>
-                    <div class="per-person-val">€431.00</div>
-                </div>
-                <table class="eco-table">
-                    <tr><th>Miembro</th><th>Total Pagado</th></tr>
-                    <tr><td>Tulio</td><td class="val">€224.97</td></tr>
-                    <tr><td>Tone</td><td class="val">€518.09</td></tr>
-                    <tr><td>Fede</td><td class="val">€549.95</td></tr>
-                </table>
-                <div class="balance-box">
-                    <div class="balance-title">Liquidación Etapa 1</div>
-                    <div class="debt-row"><span>Tulio debe a Tone</span><span class="val">€120.30</span></div>
-                    <div class="debt-row"><span>Tulio debe a Fede</span><span class="val">€85.73</span></div>
-                    <div class="debt-row"><span>Tone debe a Fede</span><span class="val">€33.22</span></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">Finanzas Etapa 2 (x2)</div>
-            <div class="eco-grid">
-                <div class="per-person-card" style="border-left: 4px solid var(--c-bel)">
-                    <div class="per-person-label">COSTO POR PERSONA</div>
-                    <div class="per-person-val">€230.62</div>
-                </div>
-                <table class="eco-table">
-                    <tr><th>Item</th><th>Pagó</th><th>Monto</th></tr>
-                    <tr><td>Hostel Wombat</td><td>Fede</td><td class="val">€43.34</td></tr>
-                    <tr><td>Vuelo Bélgica</td><td>Fede</td><td class="val">€176.70</td></tr>
-                    <tr><td>Hostel KaBa</td><td>Tone</td><td class="val">€241.20</td></tr>
-                </table>
-                <div class="balance-box">
-                    <div class="balance-title" style="color:var(--c-bel)">Liquidación Etapa 2</div>
-                    <div id="debt2"></div>
-                </div>
+        <div class="sidebar-sticky">
+            <div class="card">
+                <div class="card-header">Geolocalización de Descubrimientos</div>
+                <div id="map"></div>
             </div>
         </div>
     </aside>
@@ -202,28 +396,29 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    const map = L.map('map', {zoomControl: false, attributionControl: false}).setView([46, 6.0], 4);
+    const map = L.map('map', {zoomControl: false, attributionControl: false}).setView([47.5, 9.5], 4);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
-    [[38.7,-9.1,'#ef4444'],[50.1,8.6,'#818cf8'],[50,14.4,'#f87171'],[48.1,17.1,'#fbbf24'],[47.4,19,'#10b981'],[51,3.7,'#facc15']].forEach(l=>{
-        L.circleMarker([l[0],l[1]], {radius:6,fillColor:l[2],color:l[2],weight:1,fillOpacity:1}).addTo(map);
-    });
 
-    const renderCal = (el, start, days, sched, mName) => {
-        let h = `<div class="cal-month-name" style="font-size:9px; color:var(--muted); text-align:center; margin-bottom:8px; font-weight:800; text-transform:uppercase">${mName}</div><div class="cal-grid">`;
-        for(let i=0;i<start;i++) h+='<div></div>';
-        for(let d=1;d<=days;d++){
-            const t = sched[d];
-            h+=`<div class="cal-day ${t?'cal-active':''}" style="${t?'background:var(--c-'+t+')':''}">${d}</div>`;
-        }
-        document.getElementById(el).innerHTML = h+'</div>';
+    const addPlace = (lat, lon, color, title, detail) => {
+        L.circleMarker([lat, lon], {
+            radius: 7,
+            fillColor: color,
+            color: '#ffffff',
+            weight: 1.5,
+            fillOpacity: 1
+        }).addTo(map).bindPopup(`
+            <strong style="color:#fff; font-size:14px; font-family:'Outfit';">${title}</strong><br/>
+            <p style="color:#94a3b8; font-size:11px; margin-top:5px; line-height:1.3;">${detail}</p>
+        `);
     };
-    renderCal('calM', 5, 31, {22:'por',23:'por',24:'fra',25:'fra',26:'pra',27:'pra',28:'bra',29:'bud',30:'bud',31:'bud'}, 'Mayo');
-    renderCal('calJ', 1, 30, {1:'bud',2:'bel',3:'bel',4:'bel',5:'bel',6:'bel'}, 'Junio');
 
-    const expF2 = 43.34 + 176.70;
-    const expT2 = 241.20;
-    const target2 = (expF2 + expT2) / 2;
-    document.getElementById('debt2').innerHTML = `<div class="debt-row"><span>Fede debe a Tone</span><span class="val">€${(target2-expF2).toFixed(2)}</span></div>`;
+    addPlace(41.15, -8.62, '#ef4444', 'Oporto Histórico', 'Lello, Clérigos, Ribeira, sándwiches de pernil y bifanas.');
+    addPlace(50.11, 8.68, '#818cf8', 'Frankfurt Centro', 'Römerberg, Main Tower, mercado Kleinmarkthalle y tabernas.');
+    addPlace(50.08, 14.41, '#f87171', 'Praga Antigua', 'Puente Carlos, Castillo, jardín Vrtba y tabernas Lokál.');
+    addPlace(48.14, 17.10, '#fbbf24', 'Bratislava Centro', 'Casco Viejo, Iglesia Azul, búnkeres de guerra y Slovak Pub.');
+    addPlace(47.49, 19.04, '#10b981', 'Budapest Imperial', 'Bastión, Ruin Bars, puestos de Lángos y cocina tradicional.');
+    addPlace(51.05, 3.72, '#facc15', 'Gante Canales', 'Muelles Graslei, Castillo Gravensteen y friteries locales.');
+    addPlace(40.41, -3.70, '#ff7a00', 'Madrid de las Letras', 'Museo del Prado, Chamberí, bocadillos de calamares y tapeo.');
 </script>
 </body>
 </html>
